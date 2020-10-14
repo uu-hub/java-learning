@@ -12,17 +12,21 @@ public class BubbleSort implements Sort {
 
     @Override
     public int[] sort(int[] array) {
+        int len = array.length - 1;
         int temp = 0;
+        int position = 0;
         for (int i = 0; i < array.length - 1; i++) {
-            for (int j = 0; j < array.length - 1 - i; j++) {
             System.out.println("----------------第" + (i + 1) + "次排序----------------");
+            for (int j = 0; j < len; j++) {
                 if (array[j] > array[j + 1]) {
                     temp = array[j];
                     array[j] = array[j + 1];
                     array[j + 1] = temp;
+                    position = j;
                 }
                 System.out.println("第" + (i + 1) + "次排序的第" + (j + 1) + "次比较：" + Arrays.toString(array));
             }
+            len = position;
             System.out.println("第" + (i + 1) + "次排序结果：" + Arrays.toString(array));
         }
         return array;
