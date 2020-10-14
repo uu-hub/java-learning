@@ -7,6 +7,7 @@ public class BubbleSort implements Sort {
 //        int[] array = {5, 3, 2, 6, 1, 4};
 //        int[] array = {1, 2, 3, 5, 4};
         int[] array = {2, 1, 3, 4, 5, 6, 7};
+        array = SortUtil.randomIntArray(7, 10);
         new BubbleSort().sort(array);
     }
 
@@ -37,4 +38,5 @@ public class BubbleSort implements Sort {
         }
         return array;
     }
+
 }
