@@ -2,23 +2,23 @@ server:
   port: 8080
 spring:
   redis:
-    password: Jiagou_159
+    password: ****
     cluster:
-      nodes: 10.10.5.13:8001,10.10.5.13:8002,10.10.5.14:8001,10.10.5.14:8002,10.10.5.101:8001,10.10.5.101:8002
+      nodes: 192.168.1.1:8001,192.168.1.1:8002
       max-redirects: 3
     timeout: 10000
     lettuce:
       pool:
-        max-active: 20 # Á¬½Ó³Ø×î´óÁ¬½ÓÊı£¬¸ºÖµÃ»ÓĞÏŞÖÆ
-        max-idle: 10 # ×î´ó¿ÕÏĞÁ¬½ÓÊı£¬¸ºÖµÃ»ÓĞÏŞÖÆ
-        min-idle: 0 # ±£³Ö×îĞ¡¿ÕÏĞÁ¬½ÓÊı
-        max-wait: 1000ms # Á¬½Ó³Ø×î´ó×èÈûµÈ´ıÊ±¼ä£¬Ê¹ÓÃ¸ºÖµÎŞÏŞÆÚ×èÖ¹
-        time-between-eviction-runs: 1 # ¿ÕÏĞ¶ÔÏóÖğ³öÆ÷Ïß³ÌµÄÔËĞĞ¼ä¸ôÊ±¼ä
+        max-active: 20 # è¿æ¥æ± æœ€å¤§è¿æ¥æ•°ï¼Œè´Ÿå€¼æ²¡æœ‰é™åˆ¶
+        max-idle: 10 # æœ€å¤§ç©ºé—²è¿æ¥æ•°ï¼Œè´Ÿå€¼æ²¡æœ‰é™åˆ¶
+        min-idle: 0 # ä¿æŒæœ€å°ç©ºé—²è¿æ¥æ•°
+        max-wait: 1000ms # è¿æ¥æ± æœ€å¤§é˜»å¡ç­‰å¾…æ—¶é—´ï¼Œä½¿ç”¨è´Ÿå€¼æ— é™æœŸé˜»æ­¢
+        time-between-eviction-runs: 1 # ç©ºé—²å¯¹è±¡é€å‡ºå™¨çº¿ç¨‹çš„è¿è¡Œé—´éš”æ—¶é—´
       cluster:
         refresh:
-          adaptive: true # ¿ªÆô×ÔÊÊÓ¦¸üĞÂ¼¯ÈºÍØÆËÊÓÍ¼
-          period: 10000 # ÍØÆËË¢ĞÂÖÜÆÚ£¨ms£©
-          dynamic-refresh-sources: true # ÊÇ·ñÔÊĞí¶¯Ì¬Ë¢ĞÂÍØÆË×ÊÔ´
+          adaptive: true # å¼€å¯è‡ªé€‚åº”æ›´æ–°é›†ç¾¤æ‹“æ‰‘è§†å›¾
+          period: 10000 # æ‹“æ‰‘åˆ·æ–°å‘¨æœŸï¼ˆmsï¼‰
+          dynamic-refresh-sources: true # æ˜¯å¦å…è®¸åŠ¨æ€åˆ·æ–°æ‹“æ‰‘èµ„æº
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DATASOURCE_URL:jdbc:mysql://localhost:3306/redis_test?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8}
