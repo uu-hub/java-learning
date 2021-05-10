@@ -1,7 +1,9 @@
 package io.zbc.learning.concurrent.thread;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * @author zmsoft
@@ -29,6 +31,37 @@ public class NotSafeDemo {
 //        List<String> list = new ArrayList<String>();
 //        List<String> list = new Vector<>();
 //        List<String> list = Collections.synchronizedList(new ArrayList<>());
+//        listNotSafe();
+//        Set<String> set = new HashSet<>();
+//        setNotSafe();
+//        Map<String,String> map = new HashMap<>();
+        Map<String,String> map = new ConcurrentHashMap<>();
+
+        for (int i = 1; i <= 40; i++) {
+            new Thread(new Runnable() {
+                public void run() {
+                    map.put(Thread.currentThread().getName(), UUID.randomUUID().toString().substring(0,8));
+                    System.out.println(map);
+                }
+            },String.valueOf(i)).start();
+        }
+
+    }
+
+    private static void setNotSafe() {
+        Set<String> set = new CopyOnWriteArraySet<>();
+
+        for (int i = 1; i <= 40; i++) {
+            new Thread(new Runnable() {
+                public void run() {
+                    set.add(UUID.randomUUID().toString().substring(0,8));
+                    System.out.println(set);
+                }
+            },String.valueOf(i)).start();
+        }
+    }
+
+    private static void listNotSafe() {
         List<String> list = new CopyOnWriteArrayList();
 
         for (int i = 1; i <= 30; i++) {
@@ -37,6 +70,5 @@ public class NotSafeDemo {
                 System.out.println(list);
             },String.valueOf(i)).start();
         }
-
     }
 }
