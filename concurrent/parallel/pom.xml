@@ -10,5 +10,9 @@
 
     <packaging>pom</packaging>
 
+    <modules>
+        <module>my-service</module>
+        <module>other-service</module>
+    </modules>
 
 </project>
