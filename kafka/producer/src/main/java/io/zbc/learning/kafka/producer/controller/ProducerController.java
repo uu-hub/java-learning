@@ -1,5 +1,6 @@
 package io.zbc.learning.kafka.producer.controller;
 
+import io.zbc.learning.kafka.producer.service.ProducerService;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -19,23 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/producer")
 public class ProducerController {
 
-    private static final String TOPIC = "topic-learning";
-
     @Autowired
-    private KafkaTemplate<String, String> template;
+    ProducerService producerService;
 
     @RequestMapping("/send/{key}/{value}")
     public void sendToKafka(@PathVariable("key") String key, @PathVariable("value") String value) {
-        ProducerRecord<String, String> record = new ProducerRecord<String, String>(TOPIC, 0, key, value);
-        ListenableFuture<SendResult<String, String>> future = template.send(record);
-        future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
-            @Override
-            public void onSuccess(SendResult<String, String> result) {
-            }
-            @Override
-            public void onFailure(Throwable ex) {
-            }
-        });
+        producerService.sendToKafka(key, value);
     }
 
 }
