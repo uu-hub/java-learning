@@ -1,4 +1,4 @@
-name: Merge Feature to Main
+name: Create PR and Merge Feature Branch
 
 on:
   push:
@@ -6,13 +6,13 @@ on:
       - feature/*
 
 jobs:
-  merge-feature-to-main:
+  create-pr-and-merge:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
-        ref: update_boot_version
+        ref: main
         token: ${{ secrets.GITHUB_TOKEN }}
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -22,9 +22,15 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y git
-    - name: Merge feature branch to main
+    - name: Create PR
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
-        git merge --no-ff feature/${{ github.event.repository.default_branch }}
-        git push origin main
+        git checkout -b feature/${{ github.event.repository.default_branch }}
+        git push origin feature/${{ github.event.repository.default_branch }}
+        gh pr create --title "Merge feature branch to main" --body "This PR merges the feature branch to main." --base main --head feature/${{ github.event.repository.default_branch }}
+    - name: Merge PR
+      run: |
+        gh pr merge --admin --delete-branch --squash feature/${{ github.event.repository.default_branch }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
