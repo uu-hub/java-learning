@@ -25,13 +25,13 @@ jobs:
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
-        git checkout -b ${GITHUB_REF}
-        git push origin ${GITHUB_REF}
-        gh pr create --title "Merge feature branch to master" --body "This PR merges the feature branch to master." --base master --head ${GITHUB_REF}
+        git checkout -b feature/update_boot_version
+        git push origin feature/update_boot_version
+        gh pr create --title "Merge feature branch to master" --body "This PR merges the feature branch to master." --base master --head feature/update_boot_version
       env:
-        GITHUB_REF: ${{ github.event.ref }}
+        GITHUB_REF: feature/update_boot_version
     - name: Merge PR
       run: |
-        gh pr merge --admin --delete-branch --squash ${GITHUB_REF}
+        gh pr merge --admin --delete-branch --squash feature/update_boot_version
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
