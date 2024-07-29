@@ -1,6 +1,5 @@
 name: Create PR and Merge Feature Branch
 
-
 on:
   push:
     branches:
