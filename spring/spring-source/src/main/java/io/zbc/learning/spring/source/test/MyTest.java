@@ -26,5 +26,6 @@ public class MyTest {
         ShowSex bean = (ShowSex) applicationContext.getBean("people");
         bean.showSex();
         System.out.println(bean);
+        System.out.println("test github action");
     }
 }
