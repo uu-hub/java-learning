@@ -29,6 +29,8 @@ jobs:
         git config user.email "actions@github.com"
 
         gh pr create --title "Merge feature branch to master" --body "This PR merges the feature branch to master." --base master --head feature/${{ github.event.ref }}
+      env:
+        GH_TOKEN: ${{ github.token }}
     - name: Merge PR
       run: |
         gh pr merge --admin --delete-branch --squash feature/${{ github.event.ref }}
