@@ -26,7 +26,7 @@ jobs:
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git checkout -b feature/update_boot_version
-        git pull --rebase
+        git pull --rebase origin feature/update_boot_version
         git push origin feature/update_boot_version
         gh pr create --title "Merge feature branch to master" --body "This PR merges the feature branch to master." --base master --head feature/update_boot_version
       env:
