@@ -3,7 +3,7 @@ package io.zbc.learning.spring.source.test;
 import io.zbc.learning.spring.source.bean.People;
 import io.zbc.learning.spring.source.bean.ShowSex;
 import io.zbc.learning.spring.source.bean.Student;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -25,5 +25,7 @@ public class MyTest {
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml");
         ShowSex bean = (ShowSex) applicationContext.getBean("people");
         bean.showSex();
+        System.out.println(bean);
+        System.out.println("test github actions");
     }
 }
