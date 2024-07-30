@@ -35,6 +35,7 @@ jobs:
     - name: Merge PR
       run: |
         sleep 15
-        gh pr merge --squash
+        gh pr checkout 19 && git fetch origin master && git merge origin/master
+        gh pr merge --squash --auto
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
