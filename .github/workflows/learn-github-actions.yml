@@ -35,7 +35,7 @@ jobs:
     - name: Merge PR
       run: |
         sleep 15
-        gh pr checkout 21 && git fetch origin master && git merge --allow-unrelated-histories origin/master
+        gh pr checkout 22 && git checkout master && git fetch origin master && git merge --allow-unrelated-histories feature/update_boot_version
         
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
