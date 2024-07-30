@@ -25,12 +25,16 @@ jobs:
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
+        git fetch origin feature/update_boot_version
+        git checkout feature/update_boot_version
         gh pr create --title "Merge feature branch to master" --body "This PR merges the feature branch to master." --base master --head feature/update_boot_version
+        echo "::set-output name=pr_number::$PR_NUMBER"
       env:
         GITHUB_REF: feature/update_boot_version
         GH_TOKEN: ${{ github.token }}
     - name: Merge PR
       run: |
-        gh pr merge --admin --delete-branch --squash feature/update_boot_version
+        sleep 15
+        gh pr merge --squash
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
