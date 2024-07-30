@@ -34,8 +34,9 @@ jobs:
         GH_TOKEN: ${{ github.token }}
     - name: Merge PR
       run: |
-        sleep 15
-        git checkout master && git fetch origin master && git merge -s recursive -X theirs --allow-unrelated-histories feature/update_boot_version
+        sleep 5
+        git checkout master && git fetch origin master && git merge  feature/update_boot_version
+        git push origin master
         
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
