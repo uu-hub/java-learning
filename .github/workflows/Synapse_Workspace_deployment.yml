@@ -1,0 +1,28 @@
+name: workspace deployment
+
+on:
+  push:
+    branches: 
+      - dev
+      
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps: 
+    - name: Synapse workspace deployment
+    - uses: actions/checkout@v2
+    - uses: azure/synapse-workspace-deployment@V1.9.0
+      with:
+        TargetWorkspaceName: 'target workspace name'
+        TemplateFile: './path of the TemplateForWorkspace.json'
+        ParametersFile: './path of the TemplateParametersForWorkspace.json'
+        OverrideArmParameters: './path of the parameters.yaml'
+        environment: 'Azure China'
+        resourceGroup: 'target workspace resource group'
+        clientId: ${{secrets.CLIENTID}}
+        clientSecret:  ${{secrets.CLIENTSECRET}}
+        subscriptionId: 'subscriptionId of the target workspace'
+        tenantId: 'tenantId'
+        DeleteArtifactsNotInTemplate: 'true'
+        managedIdentity: 'False'
+          
