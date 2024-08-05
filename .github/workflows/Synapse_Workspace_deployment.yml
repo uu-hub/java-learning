@@ -3,7 +3,7 @@ name: workspace deployment
 on:
   push:
     branches: 
-      - dev
+      - workspace_publish
       
 jobs:
   release:
