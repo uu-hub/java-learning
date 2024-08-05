@@ -9,6 +9,21 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps: 
+    - name: Manual Workflow Approval
+    - uses: trstringer/manual-approval@v1.9.0
+      with:
+        # Required approvers
+        approvers: 'zmsoft'
+        # Secret
+        secret: '123456'
+        minimum-approvals: ''
+        # The custom subtitle for the issue
+        issue-title: 'PR Approval'
+        issue-body: 'PR Approval'
+        exclude-workflow-initiator-as-approver: ''
+        additional-approved-words: '' 
+        additional-denied-words: '' 
+          
     - name: Synapse workspace deployment
     - uses: actions/checkout@v2
     - uses: azure/synapse-workspace-deployment@V1.9.0
