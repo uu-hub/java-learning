@@ -32,7 +32,7 @@ jobs:
         echo $pr_info
         pr_number=$(echo $pr_info | jq -r '.number')
         echo $pr_number
-        echo "PR_NUMBER=$pr_number" >> $GITHUB_OUTPUT
+        echo "PR_NUMBER=$pr_number" >> $GITHUB_ENV
       env:
         GITHUB_REF: feature/update_boot_version
         GH_TOKEN: ${{ github.token }}
