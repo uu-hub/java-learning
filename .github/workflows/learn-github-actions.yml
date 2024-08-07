@@ -22,13 +22,13 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y git
         sudo apt-get install -y jq
-    - name: Create PR
+    - name: Create PR and add approvers
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git fetch origin feature/update_boot_version
         git checkout feature/update_boot_version
-        pr_info=$(curl -H "Authorization: token $GH_TOKEN" -X POST -d '{"title":"Merge feature branch to master","body":"This PR merges the feature branch to master","base":"master","head":"feature/update_boot_version"}' https://api.github.com/repos/$GITHUB_REPOSITORY/pulls)
+        pr_info=$(curl -H "Authorization: token $GH_TOKEN" -X POST -d '{"title":"Merge feature branch to master","body":"This PR merges the feature branch to master","base":"master","head":"feature/update_boot_version","required_reviewers":["zmsoft","zbc0512"]}' https://api.github.com/repos/$GITHUB_REPOSITORY/pulls)
         echo $pr_info
         pr_number=$(echo $pr_info | jq -r '.number')
         echo $pr_number
@@ -37,12 +37,6 @@ jobs:
         GITHUB_REF: feature/update_boot_version
         GH_TOKEN: ${{ github.token }}
       id: create-pr
-    - name: Add Approvers
-      run: |
-        gh pr edit $PR_NUMBER --add-reviewer "zmsoft" --add-reviewer "zbc0512"
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PR_NUMBER: ${{ steps.create-pr.outputs.pr_number }}
     - name: Wait for approval
       run: |
         while true; do
