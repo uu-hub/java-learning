@@ -40,7 +40,7 @@ jobs:
     - name: Wait for approval
       run: |
         while true; do
-          status=$(gh pr view $PR_NUMBER --json reviews | jq -r '.reviews[] | select(.state == "APPROVED")')
+          status=$(curl -H "Authorization: token $GH_TOKEN" -s https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/reviews | jq -r '.[] | select(.state == "APPROVED")')
           if [ "$status" != "" ]; then
             break
           fi
