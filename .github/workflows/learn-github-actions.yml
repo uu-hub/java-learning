@@ -22,7 +22,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y git
         sudo apt-get install -y jq
-    - name: Create PR and add approvers
+    - name: Create PR
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
@@ -37,6 +37,11 @@ jobs:
         GITHUB_REF: feature/update_boot_version
         GH_TOKEN: ${{ github.token }}
       id: create-pr
+    - name: Add Pull Request Reviewer
+      uses: AveryCameronUofR/add-reviewer-gh-action@1.0.3
+      with:
+        reviewers: "zmsoft"
+        token: ${{ secrets.GITHUB_TOKEN }}
     - name: Wait for approval
       run: |
         while true; do
