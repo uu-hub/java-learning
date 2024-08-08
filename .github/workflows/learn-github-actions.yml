@@ -37,11 +37,15 @@ jobs:
         GITHUB_REF: feature/update_boot_version
         GH_TOKEN: ${{ github.token }}
       id: create-pr
-    - name: Add Pull Request Reviewer
-      uses: AveryCameronUofR/add-reviewer-gh-action@1.0.3
-      with:
-        reviewers: "zmsoft"
-        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Add reviewers
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REVIEWERS: "zmsoft"
+      run: |
+        IFS=',' read -ra REVIEWERS <<< "$REVIEWERS"
+        for REVIEWER in "${REVIEWERS[@]}"; do
+          curl -X POST \n            -H "Accept: application/vnd.github+json" \n            -H "Authorization: Bearer $GITHUB_TOKEN" \n            -d '{"reviewers": ["'"$REVIEWER"'"]}' \n            https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/requested_reviewers
+        done
     - name: Wait for approval
       run: |
         while true; do
