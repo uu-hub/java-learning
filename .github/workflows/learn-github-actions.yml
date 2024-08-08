@@ -32,7 +32,7 @@ jobs:
         echo $pr_info
         pr_number=$(echo $pr_info | jq -r '.number')
         echo $pr_number
-        echo "PR_NUMBER=$pr_number" >> $GITHUB_OUTPUT
+        echo "PR_NUMBER=$pr_number" >> $GITHUB_ENV
       env:
         GITHUB_REF: feature/update_boot_version
         GH_TOKEN: ${{ github.token }}
@@ -40,12 +40,19 @@ jobs:
     - name: Wait for approval
       run: |
         while true; do
-          status=$(gh pr view $PR_NUMBER --json reviews | jq -r '.reviews[] | select(.state == "APPROVED")')
+          echo $PR_NUMBER
+          status_info=$(curl -H "Authorization: token $GH_TOKEN" -s https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/reviews)
+          echo $status_info
+          status=$(echo $status_info | jq -r '.[] | select(.state == "APPROVED")')
+          echo $status
           if [ "$status" != "" ]; then
             break
           fi
           sleep 60
         done
+      env:
+        GITHUB_REF: feature/update_boot_version
+        GH_TOKEN: ${{ github.token }}
     - name: Merge PR
       run: |
         sleep 5
