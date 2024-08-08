@@ -41,12 +41,18 @@ jobs:
       run: |
         while true; do
           echo $PR_NUMBER
-          status=$(curl -H "Authorization: token $GH_TOKEN" -s https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/reviews | jq -r '.[] | select(.state == "APPROVED")')
+          status_info=$(curl -H "Authorization: token $GH_TOKEN" -s https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/reviews)
+          echo $status_info
+          status=$(echo $status_info | jq -r '.[] | select(.state == "APPROVED")')
+          echo $status
           if [ "$status" != "" ]; then
             break
           fi
           sleep 60
         done
+      env:
+        GITHUB_REF: feature/update_boot_version
+        GH_TOKEN: ${{ github.token }}
     - name: Merge PR
       run: |
         sleep 5
